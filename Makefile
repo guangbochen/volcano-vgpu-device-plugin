@@ -29,25 +29,15 @@ BUILD_PLATFORMS ?= linux/amd64
 
 all: ubuntu20.04
 
-push:
-	docker buildx build --platform $(BUILD_PLATFORMS) --push \
-		--tag $(REGISTRY)/volcano-vgpu-device-plugin:$(VERSION)-ubuntu20.04 \
-		--file docker/Dockerfile.bookworm .
-
-push-short:
-	docker buildx build --platform $(BUILD_PLATFORMS) --push \
+build:
+	docker buildx build --platform $(BUILD_PLATFORMS) \
 		--tag $(REGISTRY)/volcano-vgpu-device-plugin:$(VERSION)\
 		--file docker/Dockerfile.bookworm .
 
-push-latest:
+push:
 	docker buildx build --platform $(BUILD_PLATFORMS) --push \
-		--tag $(REGISTRY)/volcano-vgpu-device-plugin:latest\
+		--tag $(REGISTRY)/volcano-vgpu-device-plugin:$(VERSION)\
 		--file docker/Dockerfile.bookworm .
-
-ubuntu20.04:
-	docker buildx build --platform $(BUILD_PLATFORMS) --load \
-		--tag $(REGISTRY)/volcano-vgpu-device-plugin:$(VERSION)-ubuntu20.04 \
-		--file docker/Dockerfile.ubuntu20.04 .
 
 BIN_DIR=_output/bin
 RELEASE_DIR=_output/release
